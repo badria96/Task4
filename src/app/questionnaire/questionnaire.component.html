@@ -1,0 +1,32 @@
+<div class="center" *ngIf="currentQuestion < questions.length">
+  <!-- Display the current question -->
+  <h1>Question {{ currentQuestion + 1 }}:</h1>
+  <p>{{ questions[currentQuestion].question }}</p>
+
+  <!-- Display options using ngFor -->
+  <div *ngFor="let option of questions[currentQuestion].options">
+    <input type="radio" [(ngModel)]="selectedOptions[currentQuestion]" [value]="option"
+      id="option{{ currentQuestion }}-{{ option }}" class="form-check-input" />
+    <label for="option{{ currentQuestion }}-{{ option }}" class="form-check-label">{{ option }}</label>
+  </div>
+<br><br>
+  <!-- "Next" button -->
+  <div class="inputbox">
+    <button type="button" [disabled]="!selectedOptions[currentQuestion]" class="btn btn-primary"
+      (click)="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<!-- Display "Submit" button and user details when all questions are answered -->
+<div class="center" *ngIf="currentQuestion === questions.length && !showUserDetails">
+  <div class="inputbox">
+    <br><br><br><br><br><br>
+    <button type="button" [disabled]="submitButtonDisabled" (click)="submit()">Submit</button>
+  </div>
+</div>
+
+<!-- Display user details and score when all questions are answered -->
+<div class="center" *ngIf="currentQuestion === questions.length && showUserDetails">
+  <h1>Thank you for completing the questionnaire!</h1>
+  <h3>Your Score: {{ userScore }}</h3>
+</div>
